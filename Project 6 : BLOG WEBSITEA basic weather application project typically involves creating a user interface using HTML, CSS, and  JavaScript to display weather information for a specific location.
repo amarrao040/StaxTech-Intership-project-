@@ -1,0 +1,191 @@
+Project 6 : BLOG WEBSITEA basic weather application project typically involves creating a user interface using HTML, CSS, and
+
+JavaScript to display weather information for a specific location.
+
+
+
+✅ Project 6: Blog Website
+
+A Blog Website allows users to read and (optionally) post articles or blog entries. It focuses on clean content presentation, formatting, and basic interactivity.
+
+
+---
+
+🔧 Tech Stack (Basic Version)
+
+Frontend: HTML, CSS, JavaScript
+
+(Optional): LocalStorage for storing blogs temporarily
+
+(Advanced): Firebase / Node.js + MongoDB for real-time blog storage
+
+
+
+---
+
+🧱 Basic Features
+
+1. Home page with a list of blog posts (titles + excerpts)
+
+
+2. Blog post page to read the full blog
+
+
+3. Create Blog page (form input for title + content)
+
+
+4. Responsive design for mobile & desktop
+
+
+
+
+---
+
+📁 Project Structure
+
+/blog-website/
+│
+├── index.html         ← Home Page
+├── post.html          ← View Blog Post Page
+├── create.html        ← Create New Blog
+├── style.css          ← Shared Styling
+└── script.js          ← JS Logic (Optional for LocalStorage or Navigation)
+
+
+---
+
+🧑‍💻 1. index.html (Home Page)
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Blog</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>My Blog</h1>
+    <a href="create.html">+ New Post</a>
+  </header>
+  <main id="blogList">
+    <!-- Blog previews will go here -->
+    <article>
+      <h2><a href="post.html">First Blog Post</a></h2>
+      <p>This is a short excerpt of the blog...</p>
+    </article>
+  </main>
+</body>
+</html>
+
+
+---
+
+🧑‍💻 2. create.html (Create Blog Post Page)
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Blog Post</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Create a New Blog</h1>
+  <form id="blogForm">
+    <input type="text" id="title" placeholder="Blog Title" required /><br />
+    <textarea id="content" placeholder="Write your blog here..." rows="10" required></textarea><br />
+    <button type="submit">Post</button>
+  </form>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+---
+
+🧑‍💻 3. style.css (Simple Styling)
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f4f4f4;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+input, textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+article {
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+
+---
+
+🧑‍💻 4. script.js (Optional: Save Blog in LocalStorage)
+
+document.getElementById("blogForm")?.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const title = document.getElementById("title").value;
+  const content = document.getElementById("content").value;
+
+  const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  blogs.push({ title, content });
+  localStorage.setItem("blogs", JSON.stringify(blogs));
+  window.location.href = "index.html";
+});
+
+window.addEventListener("load", () => {
+  const blogList = document.getElementById("blogList");
+  if (blogList) {
+    const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+    blogs.reverse().forEach((blog, index) => {
+      blogList.innerHTML += `
+        <article>
+          <h2><a href="post.html?id=${index}">${blog.title}</a></h2>
+          <p>${blog.content.substring(0, 100)}...</p>
+        </article>
+      `;
+    });
+  }
+});
+
+
+---
+
+📌 Optional: post.html (Single Blog View)
+
+Add code to read id from the URL and show full blog content.
+
+
+---
+
+🌟 Enhancements You Can Add
+
+Dark mode toggle
+
+Comments section
+
+Author names + dates
+
+Backend with Node.js + MongoDB
+
+Firebase hosting + Firestore database
